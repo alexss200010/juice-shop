@@ -84,3 +84,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compress')
   grunt.registerTask('package', ['replace_json:manifest', 'compress:pckg', 'checksum'])
 }
+
+//api_key: peWcBiMOS9HrZG15peWcBiMOS9HrZG15

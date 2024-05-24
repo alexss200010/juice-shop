@@ -1,5 +1,5 @@
 
-name: Prebuilt repo + Snyk Security Scanning (OS, Code, Docker, IaC)
+name: Snyk Security Scanning
 
 # Runs 4 Snyk Products (Code, Open Source, Container, IaC)
 # Snyk installation via npm
@@ -10,10 +10,10 @@ name: Prebuilt repo + Snyk Security Scanning (OS, Code, Docker, IaC)
 # - Set a SNYK_TOKEN and a SNYK_ORG in the pipelines secrets
 
 on: [push, pull_request]
-#permissions:
-  #id-token: write # This is required for requesting the JWT
-  #contents: write  # This is required for actions/checkout
-  #security-events: write
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: write  # This is required for actions/checkout
+  security-events: write
 
 jobs:
   build:
@@ -29,10 +29,12 @@ jobs:
         node-version: 18.4
 
     # Install & prepare Snyk
-    - run: npm install --location=global snyk
+    - name: Install & prepare Snyk
+      run: npm install --location=global snyk
 
     # Login to Snyk Cloud
-    - run: snyk auth ${{ secrets.SNYK_TOKEN }}
+    - name: Login to Snyk Cloud
+      run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
     - name: Snyk SCA testing
       run: snyk test  --all-projects --severity-threshold=high

@@ -23,12 +23,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
 
       - name: Install dependencies
         run: |
           sudo npm install -g npm@latest #increase-memory-limit
-          npm install
-          npm -v
+          npm ci
+          npm test
         
       - name: Snyk install & Auth
         run: |

@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo npm install -g npm@latest #increase-memory-limit
+          npm install
           npm -v
         
       - name: Snyk install & Auth

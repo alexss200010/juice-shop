@@ -14,29 +14,29 @@ on:
 
 jobs:
   Snyk-Check:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Code Checkout
-      uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: |
-        sudo npm install -g npm@latest #increase-memory-limit
-        npm -v
+      - name: Install dependencies
+        run: |
+          sudo npm install -g npm@latest #increase-memory-limit
+          npm -v
         
-    - name: Snyk install & Auth
-      run: |
-        sudo npm install -g snyk
-        snyk auth ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk install & Auth
+        run: |
+          sudo npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
 
-    - name: Snyk Test for high vulns
-      run: |
-        snyk test --org=${{ secrets.SNYK_ORG }} --severity-threshold=high --fail-on=all
+      - name: Snyk Test for high vulns
+        run: |
+          snyk test --org=${{ secrets.SNYK_ORG }} --severity-threshold=high --fail-on=all
 
-    - name: Snyk Monitor
-      run: |
-        snyk monitor --org=${{ secrets.SNYK_ORG }}
+      - name: Snyk Monitor
+        run: |
+          snyk monitor --org=${{ secrets.SNYK_ORG }}
